@@ -1,12 +1,43 @@
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #DAD9D9;
+    background-color: #1266AC;
 }
 
 header {
     text-align: center;
     margin: auto;
-    background-color:#1266AC;
+    background-color:white;
     padding: 25px;
     color: white;
+}
+
+.navigation-bar {
+    background-color: gray; /* Change the background color as needed */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    flex-basis: 100px;
+    
+}
+
+.navigation-bar ul {
+    /* list-style: none; */
+    padding: 0;
+}
+
+.navigation-bar li {
+    display: inline;
+    margin: 10px;
+}
+
+.navigation-bar a {
+    text-decoration: none;
+    color: white;
+    font-size: 20px;
+
+}
+
+/* Style the active tab */
+.navigation-bar li.active {
+    font-weight: bold;
 }
