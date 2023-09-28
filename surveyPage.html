@@ -9,11 +9,15 @@
     <title>Document</title>
 </head>
 <body>
+    <header class="main-header">
+        <img width="500px" src="ProjLogo.jpg" alt="Logo">
+        
+    </header>
     <main>
         <nav class="navigation-bar">
         <h1>This page will display a survey</h1>
         </nav>
-        <div id= "login">
+        <div id= "login" class="not-loggedin">
         <form action="action_page.php">
             <div class="input" class ="form-group">
             <label for="studentID">StudentID:</label>
@@ -23,7 +27,7 @@
             <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd">
             </div>
-            <button type="submit" class="btn btn-default">Submit</button>
+            <button type="submit" class="btn btn-default" id = logbtn>Submit</button>
         </form>
         </div>
     </main>
