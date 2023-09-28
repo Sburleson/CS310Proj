@@ -41,3 +41,16 @@ header {
 .navigation-bar li.active {
     font-weight: bold;
 }
+
+.input{
+    width: 200px;
+    align-content: center;
+}
+
+form{
+    display:inline-block;
+}
+
+#login{
+    text-align: center;
+}
