@@ -20,8 +20,9 @@
         let cred = true;
         if (cred){
         console.log("checked");
-                
+              
         }
+        window.location.href = 'reshalls/ResHalls.html'; 
             
     }
 
