@@ -17,6 +17,7 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     flex-basis: 100px;
+    margin-bottom: 2%;
     
 }
 
@@ -40,4 +41,17 @@ header {
 /* Style the active tab */
 .navigation-bar li.active {
     font-weight: bold;
+}
+
+#dropdown{
+    align-content: center;
+    text-align: center;
+}
+
+#ReshallDrop{
+    margin-left: 33%;
+    align-content: center;
+    text-align: center;
+    width: 33%;
+    color: white;
 }
