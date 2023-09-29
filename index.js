@@ -1,8 +1,9 @@
-"use strict";
-(function () {
-    window.addEventListener('load',initialization);
 
-    function initialization() {
+(function () {
+    "use strict";
+    window.addEventListener('load',initialize);
+
+    function initialize() {
         console.log("init");
         let SidEle = document.getElementById('StudentID');
         let pwdEle = document.getElementById('pwd');
@@ -10,10 +11,8 @@
 
         console.log(logBtn);
 
-        logBtn.addEventListener('click', checkCred);
+        logBtn.addEventListener('click',checkCred);
     }
-
-
 
     function checkCred() {
         console.log("checkCred");
@@ -25,4 +24,5 @@
         }
             
     }
+
 })();
