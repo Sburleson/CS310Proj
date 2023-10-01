@@ -55,6 +55,16 @@ header {
     width: 33%;
     color: white;
 }
+#ResPhotos {
+    text-align: center;
+}
+#ResPhotos img{
+    padding-top: 15px;
+    padding-bottom: 30px;
+    width: 50%; /* Adjust the width to your desired size */
+    height: auto;
+    
+}
 
 .hide {
     display: none;

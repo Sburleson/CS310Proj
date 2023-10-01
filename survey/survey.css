@@ -17,7 +17,7 @@ form{
 
 body {
     font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(18, 118, 184);
+    background-color: #1266AC;
 }
 
 header {
@@ -60,12 +60,22 @@ header {
 }
 
 main{
-    background-color: rgb(18, 118, 184);
+    background-color: #1266AC;
 }
 
-.dropdown{
+.dropdown {
+    text-align: center;
+    padding-top: 10px;
+}
+
+.input-group {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
     
 }
+  
+
 .visible{
     visibility: hidden;
 }
