@@ -17,6 +17,7 @@ header {
     flex-wrap: wrap;
     justify-content: center;
     flex-basis: 100px;
+    padding-top: 10px;
     
 }
 
