@@ -15,39 +15,55 @@
     <title>Document</title>
 </head>
 <body>
-    <header class="main-header">
-        <img width="500px" src="ProjLogo.jpg" alt="Logo">
-        
-    </header>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar bg-blue">
+        <a class="navbar-brand" href="ResHalls.html">
+            <img id="birdLogo" src="../mainImages/ProjLogo.jpg" alt="Bird Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../index.html">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../reshalls/ResHalls.html">
+                        <i class="fas fa-building"></i> Residence Halls
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="surveyPage.html">
+                        <i class="fas fa-poll"></i> Survey
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+  </header>
     <main>
-        <nav class="navigation-bar">
-          <ul>
-            <li><a href="../index.html"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="../reshalls/ResHalls.html"><i class="fas fa-building"></i> Residence Halls</a></li>
-            <li class="active"><a href="surveyPage.html"><i class="fas fa-poll"></i> Survey</a></li>
-          </ul>
-        </nav>
 
         <!-- dropdown to select how many roomates -->
-        <div id="dropdown" class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
-              Dropdown button
-            </button>
-            <ul class="dropdown-menu">
-              <li><a class="dropdown-item" href="#">Standard</a></li>
-              <li><a class="dropdown-item" href="#">ILU</a></li>
-              <li><a class="dropdown-item" href="#">Solo</a></li>
-            </ul>
+        <div id="surveyDropdown" class="dropdown">
+            <select class="form-control" id="surveyDropdown">
+                <option value="" disabled selected>-- Select Housing Option --</option>
+                <option value="Dorm">Dorm</option>
+                <option value="Quad">Quad</option>
+                <option value="Apartment">Apartment</option>
+            </select>
           </div>
 
           <!-- after dropdown is selected, show amount of inputs -->
-          
+          <div id="roommates">
             <div class="input-group mb-3">
               <span class="input-group-text">Roomate 1:</span>
               <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInputGroup1" placeholder="StudentID">
               </div>
-              <button class="btn btn-primary" id="saveButton3">Save</button>
+             
             </div>
               
             <div class="input-group mb-3">
@@ -55,7 +71,7 @@
               <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInputGroup2" placeholder="StudentID">
               </div>
-              <button class="btn btn-primary" id="saveButton3">Save</button>
+              
             </div>
 
             <div class="input-group mb-3">
@@ -63,9 +79,10 @@
               <div class="form-floating">
                 <input type="text" class="form-control" id="floatingInputGroup3" placeholder="StudentID">
               </div>
-              <button class="btn btn-primary" id="saveButton3">Save</button>
+              
             </div>
-          
+            <button class="btn btn-primary" id="saveButton">Save</button>
+          </div>
     </main>
 </body>
 </html>
