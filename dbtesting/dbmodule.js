@@ -3,10 +3,10 @@
 const mysql = require('mysql');
 
 const dbConfig = {
-  host: 'your-database-host',
-  user: 'your-username',
-  password: 'your-password',
-  database: 'your-database',
+  host: '127.0.0.1',
+  user: 'root',
+  password: 'simonB2527',
+  database: 'Local',
 };
 
 // Create a connection pool
