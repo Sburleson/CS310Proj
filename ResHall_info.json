@@ -1,56 +1,44 @@
 {
-    "ResHalls":[
-        {
-            "name": "Brinser",
+    "ResHalls":{
+
+        "Brinser": {
             "Capacity": 109,
             "img": "reshalls/ResPhotos/Brinser.png"
-
         },
-        {
-            "name": "Founders",
+        "Founders": {
             "Capacity": 326,
             "img": "reshalls/ResPhotos/Founders.png"
         },
-        {
-            "name": "Hackman North",
+        "Hackman North": {
             "Capacity": 60,
-            "img":"reshalls/ResPhotos/Hackman.png",
-            "type":"ILU"
-
+            "img": "reshalls/ResPhotos/Hackman.png",
+            "type": "ILU"
         },
-        {
-            "name": "Hackman South",
+        "Hackman South":{
             "Capacity": 60,
             "img": "reshalls/ResPhotos/Hackman.png",
             "type":"ILU"
         },
-        {
-            "name": "Meyer",
+        "Meyer":{
             "Capacity": 130,
             "img":"reshalls/ResPhotos/Meyer.png"
-
         },
-        {
-            "name": "Ober",
+        "Ober":{
             "Capacity": 260,
             "img":"reshalls/ResPhotos/Ober.png"
         },
-        {
-            "name": "Quads",
+        "Quads":{
             "Capacity": 128,
             "img":"reshalls/ResPhotos/Quads.png",
             "type":"ILU"
-
         },
-        {
-            "name": "Royer",
+        "Royer":{
             "Capacity": 130,
             "img":"reshalls/ResPhotos/Royer.png"
         },
-        {
-            "name": "Schlosser",
+        "Schlosser":{
             "Capacity": 210,
             "img":"reshalls/ResPhotos/Schlosser.png"
         }
-    ]
+    }
 }
