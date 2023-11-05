@@ -1,5 +1,7 @@
+const APIURL = "http://localhost:8080";
 // Assuming you have a dropdown with the id "dropdown" and an image element with id "selected-image"
-const dropdown = document.getElementById('dropdown'); // Correct the dropdown ID to match your HTML
+const dropdown = document.querySelectorAll(".dropdown"); // Correct the dropdown ID to match your HTML
+console.log(document.querySelectorAll('.dropdown'));// theres a CORS error, but if you execute this in the webpage console it works
 const selectedImage = document.getElementById('selected-image');
 
 // Function to populate the dropdown with residence hall names
@@ -13,7 +15,7 @@ function populateDropdown(data) {
 }
 
 // Fetch the residence hall data from your API and populate the dropdown
-fetch('/api/reshalls')
+fetch(APIURL+'/api/reshalls/all')
   .then((response) => response.json())
   .then((data) => {
     // Populate the dropdown with residence hall names from the API data
