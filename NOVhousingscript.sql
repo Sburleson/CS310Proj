@@ -17,59 +17,41 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
 USE `mydb` ;
 
--- -----------------------------------------------------
--- Table `mydb`.`Res Halls`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Res Halls` (
   `ID` INTEGER NOT NULL,
   `Name` TEXT NULL,
   `Capacity` TEXT NULL,
   PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
 
-
--- -----------------------------------------------------
--- Table `mydb`.`Groups`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Groups` (
   `ID` INTEGER NOT NULL,
   `StudentIDs` TEXT NULL,
-  PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`ID`));
 
 
--- -----------------------------------------------------
--- Table `mydb`.`Students`
--- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Students` (
   `ID` INTEGER NOT NULL,
   `Name` TEXT NULL,
   `Credits` TEXT NULL,
   `GPA` TEXT NULL,
   `RoomID` INTEGER NULL,
-  PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`ID`));
 
 
--- -----------------------------------------------------
--- Table `mydb`.`ResHallX`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `ResHallX` (
   `RoomID` INTEGER NOT NULL,
   `OccupiedBy` TEXT NULL,
-  PRIMARY KEY (`RoomID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`RoomID`));
 
 
--- -----------------------------------------------------
--- Table `mydb`.`Queues`
--- -----------------------------------------------------
+
 CREATE TABLE IF NOT EXISTS `Queues` (
   `ID` INTEGEREGER NOT NULL,
   `ResHall` TEXT NULL,
   `GroupID` TEXT NULL,
-  PRIMARY KEY (`ID`))
-ENGINE = InnoDB;
+  PRIMARY KEY (`ID`));
+
 
 
 SET SQL_MODE=@OLD_SQL_MODE;
