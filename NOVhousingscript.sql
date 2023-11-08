@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `Students` (
   `Credits` TEXT NULL,
   `GPA` TEXT NULL,
   `RoomID` INTEGER NULL,
+  'Password' TEXT NOT NULL,
   PRIMARY KEY (`ID`));
 
 

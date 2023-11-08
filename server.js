@@ -1,7 +1,17 @@
 const express = require('express');
 const fs = require('fs'); // Require the 'fs' module to work with the file system
+const { get } = require('http');
+const multer = require("multer");
+const sqlite = require("sqlite");
+const sqlite3 = require("sqlite3");
 const app = express();
 const port = 8080;
+const DB_PATH = "Housing.db";
+
+app.use(express.urlencoded({extednded: true}));
+app.use(express.json());
+app.use(multer().none());
+
 
 app.use(express.static('static'));
 
@@ -38,6 +48,36 @@ app.get('/api/reshalls/:name', (req, res) => {
     console.log(error);
   }
 });
+
+app.post("login", async function(req, res) {
+    let studentID = req.body.studentID;
+    let password = req.body.pwd;
+    if (validation(studentID, password)) {
+        res.json({"msg": "Successfully logged in"});
+    }
+    else {
+        res.status(400).json({"msg": "Password incorrect!"});
+    }
+})
+
+async function validation(studentID, pwd) {
+    const db = await getDBConnection();
+    const query = "SELECT ID, Password from Students WHERE ID=" + studentID;
+    const rows = await db.all(query);
+
+    await db.close();
+    console.log(rows[0]);
+    return rows[0]["Password"] == pwd;
+}
+
+async function getDBConnection() {
+    const db = await sqlite.open({
+        filename: DB_PATH,
+        driver: sqlite3.Database
+    });
+
+    return db;
+}
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
