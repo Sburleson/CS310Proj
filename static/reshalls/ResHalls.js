@@ -1,53 +1,70 @@
+//const { response } = require("express");
+
 const APIURL = "http://localhost:8080";
-// Assuming you have a dropdown with the id "dropdown" and an image element with id "selected-image"
-const dropdown = document.querySelectorAll(".dropdown"); // Correct the dropdown ID to match your HTML
-console.log(document.querySelectorAll('.dropdown'));// theres a CORS error, but if you execute this in the webpage console it works
-const selectedImage = document.getElementById('selected-image');
 
-// Function to populate the dropdown with residence hall names
-function populateDropdown(data) {
-  data.forEach((building) => {
-    const option = document.createElement('option');
-    option.value = building.name;
-    option.textContent = building.name;
-    dropdown.appendChild(option);
-  });
-}
+window.addEventListener("load", init);
 
-// Fetch the residence hall data from your API and populate the dropdown
-fetch(APIURL+'/api/reshalls/all')
-  .then((response) => response.json())
+function init(){
+  console.log("int");
+  const dropdown = document.querySelector("#dropdown"); // Correct the dropdown ID to match your HTML
+  console.log(dropdown);
+  const selectedImage = document.getElementById('selected-image');
+    // Fetch the residence hall data from your API and populate the dropdown
+  fetch(APIURL+'/api/reshalls/all')
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error('Network response was not ok');
+    }
+    return response.json();
+  })
   .then((data) => {
-    // Populate the dropdown with residence hall names from the API data
     populateDropdown(data);
   })
   .catch((error) => {
     console.error('Error fetching data from the API:', error);
   });
 
-// Event listener for dropdown changes
-dropdown.addEventListener('change', () => {
+  // Event listener for dropdown changes
+  dropdown.addEventListener('change', () => {
   const selectedBuilding = dropdown.value;
+  console.log(selectedBuilding);
 
   // Fetch the specific residence hall by name
   fetch(`/api/reshalls/${selectedBuilding}`)
     .then((response) => {
       if (response.status === 404) {
         console.error('Residence hall not found.');
-      } else {
+      } else{
         return response.json();
       }
     })
     .then((buildingData) => {
       // Hide all images first
-      document.querySelectorAll('.res-photo').forEach((img) => img.classList.add('hide'));
-
+      let element = document.querySelector('div#ResPhotos');
+      element.innerHTML = "";
+      //.forEach((img) => img.classList.add('hide'));
+      console.log(buildingData);
       // Show the selected image
-      const selectedImage = document.getElementById(selectedBuilding);
-      selectedImage.src = `/static/reshalls/resphotos/${selectedBuilding}.png`; // Set the image source
-      selectedImage.classList.remove('hide');
+      let newimage = document.createElement("img");
+      newimage.src = buildingData.imageUrl;  
+      element.appendChild(newimage);
     })
     .catch((error) => {
       console.error('Error fetching building data from the API:', error);
     });
-});
+  });
+}
+
+// Function to populate the dropdown with residence hall names
+function populateDropdown(data) {
+  console.log(data.ResHalls);
+  for(hall in data.ResHalls){
+    //console.log(hall);
+    const option = document.createElement('option');
+    option.value = hall;
+    option.textContent = hall;
+    //console.log(option);
+    dropdown.appendChild(option);
+  }
+
+}
