@@ -8,11 +8,9 @@ const app = express();
 const port = 8080;
 const DB_PATH = "Housing.db";
 
-app.use(express.urlencoded({extednded: true}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(multer().none());
-
-
 app.use(express.static('static'));
 
 // Read the residence hall data from the JSON file
@@ -49,25 +47,38 @@ app.get('/api/reshalls/:name', (req, res) => {
   }
 });
 
-app.post("login", async function(req, res) {
+app.post("/login", async function(req, res) {
+    console.log("received login request");
     let studentID = req.body.studentID;
     let password = req.body.pwd;
-    if (validation(studentID, password)) {
-        res.json({"msg": "Successfully logged in"});
+    try {
+    if (await validation(studentID, password)) {
+        res.status(200).json({msg: "success"});
+        console.log("Success");
     }
     else {
         res.status(400).json({"msg": "Password incorrect!"});
+        console.log("Fail");
     }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({msg: "internal server error"});
+  }
 })
 
 async function validation(studentID, pwd) {
     const db = await getDBConnection();
     const query = "SELECT ID, Password from Students WHERE ID=" + studentID;
-    const rows = await db.all(query);
+    const rows = await db.all(query, [studentID]);
 
     await db.close();
-    console.log(rows[0]);
-    return rows[0]["Password"] == pwd;
+
+    if (rows.length > 0) {
+      console.log(rows[0]);
+      return rows[0]["Password"] == pwd;
+    } else {
+      return false;
+    }
 }
 
 async function getDBConnection() {
