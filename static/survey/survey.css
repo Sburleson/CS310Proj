@@ -1,20 +1,16 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #DAD9D9 !important;
 }
 
-
-header {
-    background-color: #1266AC;
+header, .navbar {
+    background-color: #1266AC; /* Bootstrap's primary blue color */
     color: #fff;
-    text-align: center;
-    padding: 10px;
 }
 
 #birdLogo {
-    max-width: 200px;
+    max-width: 250px;
     display: block; 
     margin: 0 auto;
 }
@@ -27,65 +23,83 @@ header {
 }
 
 .navbar {
-    background-color: #1266AC;
-    text-align: center;
-    padding: 10px;
+    background: linear-gradient(to right, white, black) !important;
 }
 
 .navbar a {
     text-decoration: none;
     color: #fff;
     margin: 0 10px;
+    transition: color 0.3s ease; /* Smooth transition for color change */
 }
 
-.input{
+.navbar a:hover {
+    color: #ffcc00; /* Yellow color on hover */
+}
+
+.input {
     width: 200px;
     align-content: center;
 }
 
-form{
-    display:inline-block;
+form {
+    display: inline-block;
 }
 
-#login{
+#login {
     text-align: center;
 }
 
-.loggedin{
+.loggedin {
     visibility: hidden;
 }
 
-main{
-    background-color: #DAD9D9;
+main {
+    background: linear-gradient(to bottom, white, #1266AC) !important;
+    min-height: 100vh; /* Set minimum height to 100% of viewport height */
 }
 
-main>h2 {
+main > h2 {
     text-align: center;
-    font-size: 24px;
+    font-size: 36px; /* Increase the font size for consistency */
     padding: 15px;
 }
 
-#dropdown{
+#dropdown {
     align-content: center;
     text-align: center;
 }
 
-#surveyDropdown{
+#surveyDropdown {
     text-align: center;
     max-width: 400px;
     display: block;
     margin: 0 auto;
-    
+    border: 2px solid #1266AC;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+#roommates {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    border: 2px solid #1266AC;
+    border-radius: 8px;
 }
 
 .input-group {
-    display: flex;
-    justify-content: center;
-    padding-top: 15px;
+    margin-bottom: 15px;
 }
 
 .input-group-text {
-    border: 2px solid black;
+    border: 2px solid #1266AC;
+    background-color: #1266AC;
+    color: white;
+}
+
+.form-floating {
+    width: 100%;
 }
   
 #saveButton {
@@ -94,8 +108,15 @@ main>h2 {
     background-color: #dad9da;
     border: 2px solid black;
     color: black;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
 }
 
-.visible{
+#saveButton:hover {
+    background-color: #1266AC;
+    border-color: #1266AC;
+    color: white;
+}
+
+.visible {
     visibility: hidden;
 }

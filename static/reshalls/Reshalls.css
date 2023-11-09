@@ -1,27 +1,30 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Arial', sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #DAD9D9 !important;
 }
 
-
-header {
-    background-color: #1266AC;
+header, .navbar {
+    background: linear-gradient(to right, white, black) !important;
     color: #fff;
-    text-align: center;
-    padding: 10px;
+}
+
+#birdLogo {
+    max-width: 250px;
+    display: block; 
+    margin: 0 auto;
 }
 
 main {
+    background: linear-gradient(to bottom, white, #1266AC) !important;
+    min-height: 100vh;
     text-align: center;
-    padding: 15px;
-    
+    margin: auto;
+    padding: 20px;
 }
 
-main>h1 {
+main > h1 {
     font-size: 32px;
-    /* animation: bounce 1s infinite; */
 }
 
 @keyframes bounce {
@@ -36,14 +39,8 @@ main>h1 {
     }
 }
 
-main>h2 {
+main > h2 {
     font-size: 24px;
-}
-
-#birdLogo {
-    max-width: 200px;
-    display: block; 
-    margin: 0 auto;
 }
 
 #textLogo {
@@ -54,7 +51,7 @@ main>h2 {
 }
 
 .navbar {
-    background-color: #1266AC;
+    background: linear-gradient(to right, white, black) !important;
     text-align: center;
     padding: 10px;
 }
@@ -65,29 +62,28 @@ main>h2 {
     margin: 0 10px;
 }
 
-
-#dropdown{
+#dropdown {
     align-content: center;
     text-align: center;
 }
 
-#ReshallDrop{
-    margin-left: 33%;
-    align-content: center;
-    text-align: center;
-    width: 33%;
-    color: black;
+#ReshallDrop {
+    margin: 20px auto; /* Center the dropdown */
+    max-width: 400px; /* Limit the width for better appearance */
     padding: 15px;
+    border: 2px solid #1266AC;
+    border-radius: 8px;
 }
+
 #ResPhotos {
     text-align: center;
 }
-#ResPhotos img{
+
+#ResPhotos img {
     padding-top: 15px;
     padding-bottom: 30px;
-    width: 50%; 
+    width: 50%;
     height: auto;
-    
 }
 
 .hide {

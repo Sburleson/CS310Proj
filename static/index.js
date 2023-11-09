@@ -49,7 +49,9 @@
         // Add a new element to display the success message
         let successMessage = document.createElement('div');
         successMessage.textContent = 'Logged in successfully!';
-        successMessage.style.color = 'green';
+        successMessage.style.color = '#28a745'; /* Bootstrap's success color */
+        successMessage.style.fontWeight = 'bold';
+        successMessage.style.marginTop = '20px'; /* Adjust based on your design */
         document.body.appendChild(successMessage);
     }
 })();
