@@ -48,9 +48,12 @@ app.get('/api/reshalls/:name', (req, res) => {
 });
 
 app.post("/login", async function(req, res) {
+
     console.log("received login request");
-    let studentID = req.body.studentID;
-    let password = req.body.pwd;
+    console.log(req.params);
+    console.log(req.body);
+    let studentID = req.body.ID;
+    let password = req.body.pass;
     try {
     if (await validation(studentID, password)) {
         res.status(200).json({msg: "success"});
@@ -68,8 +71,8 @@ app.post("/login", async function(req, res) {
 
 async function validation(studentID, pwd) {
     const db = await getDBConnection();
-    const query = "SELECT ID, Password from Students WHERE ID=" + studentID;
-    const rows = await db.all(query, [studentID]);
+    const query = "SELECT ID,Password from Students where ID is "+studentID;
+    const rows = await db.all(query);
 
     await db.close();
 

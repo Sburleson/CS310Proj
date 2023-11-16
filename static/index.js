@@ -1,9 +1,8 @@
-(function () {
-    "use strict";
-    window.addEventListener('load', initialize);
-
-    function initialize() {
+  window.addEventListener('load', init);
+  console.log("1");
+    function init(){
         console.log("init");
+
         let SidEle = document.getElementById('StudentID');
         let pwdEle = document.getElementById('pwd');
         let logBtn = document.getElementById('logbtn');
@@ -15,18 +14,23 @@
 
     function checkCred(event) {
         event.preventDefault(); // Prevent the form from submitting
-
+        const BASE_URL = "http://localhost:8080";
         let studentID = document.getElementById('StudentID').value;
         let password = document.getElementById('pwd').value;
-
         // Make a POST request to the server
-        fetch('/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ studentID, pwd: password }),
-        })
+        //let data = {method: "POST",ID: studentID, pass: password};
+        //console.log(data);
+
+        data = {method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ID: studentID, pass: password })
+        }
+
+        console.log(data);
+
+        fetch(BASE_URL+'/login', data)
         .then(response => response.json())
         .then(data => {
             if (data.msg === 'success') {
@@ -54,4 +58,4 @@
         successMessage.style.marginTop = '20px'; /* Adjust based on your design */
         document.body.appendChild(successMessage);
     }
-})();
+
