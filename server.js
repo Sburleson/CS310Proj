@@ -84,6 +84,26 @@ async function validation(studentID, pwd) {
     }
 }
 
+app.post("/group", async function(req, res) {
+  const { ID, StudentIDs } = req.body;
+
+  try {
+      await insertIntoGroups(ID, StudentIDs);
+      res.status(200).json({ msg: "Data inserted successfully into groups table" });
+      console.log("Data inserted into groups table");
+  } catch (error) {
+      console.log(error);
+      res.status(500).json({ msg: "Internal server error" });
+  }
+});
+
+async function insertIntoGroups(ID, StudentIDs) {
+  const db = await getDBConnection();
+  const query = "INSERT INTO groups (ID, StudentIDs) VALUES (?, ?)";
+  await db.run(query, [ID, JSON.stringify(StudentIDs)]);
+  await db.close();
+}
+
 async function getDBConnection() {
     const db = await sqlite.open({
         filename: DB_PATH,
