@@ -99,10 +99,76 @@ app.post("/group", async function(req, res) {
 
 async function insertIntoGroups(ID, StudentIDs) {
   const db = await getDBConnection();
-  const query = "INSERT INTO groups (ID, StudentIDs) VALUES (?, ?)";
-  await db.run(query, [ID, JSON.stringify(StudentIDs)]);
-  await db.close();
+  try {
+    const query = "INSERT INTO groups (ID, StudentIDs) VALUES (?, ?)";
+    await db.run(query, [ID, JSON.stringify(StudentIDs)]);
+
+    const studentsCreditsQuery = `SELECT ID, Credits FROM Students WHERE ID IN (${StudentIDs.join(",")})`;
+    const studentCredits = await db.all(studentsCreditsQuery);
+
+    let totalCredits = 0;
+    studentCredits.forEach(student => {
+    totalCredits += parseInt(student.Credits, 10); // Ensure proper parsing to integer
+    });
+
+
+    const numberOfStudents = StudentIDs.length;
+    const averageCredits = totalCredits / numberOfStudents;
+    
+
+    // Insert average credits and group ID into the queue table
+    const insertQueueQuery = "INSERT INTO queues2 (GroupID, AverageCredits) VALUES (?, ?)";
+    await db.run(insertQueueQuery, [ID, averageCredits]);
+
+    // Sort students based on credits
+    const sortedStudents = studentCredits.sort((a, b) => a.Credits - b.Credits);
+    console.log("Sorted Students:", sortedStudents);
+
+    console.log("Average credits for the group:", averageCredits);
+    console.log("Queue based on credits (ascending order):", sortedStudents);
+  } catch (error) {
+    console.log(error);
+    // res.status(500).json({ msg: "Internal server error" });
+  } finally {
+    await db.close();
+  }
 }
+
+app.get('/queue-order', async (req, res) => {
+  try {
+      // Retrieve the order of groups in the queue from the database or wherever it's stored
+      // For example:
+      const queueOrder = await getQueueOrderFromDatabase(); // Implement this function to get the queue order
+
+      // Send the retrieved queue order as a response
+      res.json(queueOrder);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+async function getQueueOrderFromDatabase() {
+  const db = await getDBConnection();
+  try {
+    const query = "SELECT GroupID FROM queues2 ORDER BY AverageCredits DESC";
+    const queueData = await db.all(query);
+
+    console.log("Queue Data:", queueData); // Log retrieved queue data
+
+    const queueOrder = queueData.map(item => item.GroupID);
+    return queueOrder;
+  } catch (error) {
+    console.error(error);
+    throw new Error('Failed to retrieve queue order from the database');
+  } finally {
+    await db.close();
+  }
+}
+
+
+
+
 
 async function getDBConnection() {
     const db = await sqlite.open({
