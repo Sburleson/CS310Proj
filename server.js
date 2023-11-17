@@ -50,7 +50,6 @@ app.get('/api/reshalls/:name', (req, res) => {
 app.post("/login", async function(req, res) {
 
     console.log("received login request");
-    console.log(req.params);
     console.log(req.body);
     let studentID = req.body.ID;
     let password = req.body.pass;
