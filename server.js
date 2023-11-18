@@ -53,7 +53,7 @@ app.post("/login", async function(req, res) {
     console.log(req.body);
     let studentID = req.body.ID;
     let password = req.body.pass;
-    try {
+    try{
     if (await validation(studentID, password)) {
         res.status(200).json({msg: "success"});
         console.log("Success");
@@ -67,6 +67,38 @@ app.post("/login", async function(req, res) {
     res.status(500).json({msg: "internal server error"});
   }
 })
+
+app.post("/group", async function(req, res) {
+  console.log("received group request");
+  console.log(req.body.StudentIDs);
+  let IDs = req.body.StudentIDs;
+  try{
+    if(await addgroup(IDs)){
+      res.status(200).json({msg: "success"});
+        console.log("Success");
+    }
+    else{
+      res.status(400).json({"msg": "group not added!"});
+        console.log("Fail");
+    }
+  }catch(error) {
+      console.log(error);
+      res.status(500).json({msg: "internal server error"});
+  }
+})
+
+async function addgroup(StudentIDs){
+    //const IDs = StudentIDs.map(id => `"${id}"`).join(',');
+    
+    console.log("adding to group");
+    //console.log(IDs);
+    const db = await getDBConnection();
+    const query = `Insert into Groups(ID,StudentIDs) values(1,"${StudentIDs}")`;     
+    console.log(query);   
+    const rows = await db.all(query);            
+
+    await db.close();
+}
 
 async function validation(studentID, pwd) {
     const db = await getDBConnection();

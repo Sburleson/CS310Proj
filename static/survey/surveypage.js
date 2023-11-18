@@ -7,15 +7,11 @@
         console.log("init");
         let Sid = document.getElementById('StudentID');
         let pwd = document.getElementById('pwd');
-<<<<<<< HEAD
-        let SubBtn = document.getElementById('saveButton');
-=======
         let SubBtn = document.getElementById('logbtn');
         let save = document.getElementById('saveButton');
         save.addEventListener('click', saveFunction);
->>>>>>> 6587838a1bb1a728b9195f9f5dc8c497ef44fc8f
         console.log(SubBtn);
-        SubBtn.addEventListener('click', test);
+        //SubBtn.addEventListener('click', test);
     }
 
     function test(){
