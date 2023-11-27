@@ -66,6 +66,8 @@ app.post("/login", async function(req, res) {
     console.log(error);
     res.status(500).json({msg: "internal server error"});
   }
+
+  //PopReshallX();
 })
 
 app.post("/group", async function(req, res) {
@@ -85,6 +87,24 @@ app.post("/group", async function(req, res) {
       console.log(error);
       res.status(500).json({msg: "internal server error"});
   }
+})
+
+app.get("/Queue/:type",async function(req,res){
+  try{
+    let type = req.params.type;
+    const db = await getDBConnection();
+    const query = `Select max(QID) from ${type}`;
+    const rows = await db.all(query);
+
+    console.log(rows);
+    res.send(rows)
+  }
+  catch(error){
+
+  }
+  
+
+  await db.close();
 })
 
 async function addgroup(StudentIDs){
@@ -113,6 +133,32 @@ async function validation(studentID, pwd) {
     } else {
       return false;
     }
+}
+
+async function getPosition(){
+    const db = await getDBConnection();
+    const query = "SELECT ID,Password from Students where ID is "+studentID;
+    const rows = await db.all(query);
+
+    await db.close();
+    return rows;
+}
+
+async function PopReshallX(){
+  console.log("in pop");
+  const db = await getDBConnection();
+
+  let rooms = 10;
+  let halls = 8;
+
+  for(let x=0; x<halls; x++){
+    for(let y=0; y<rooms; y++){
+      const query = `INSERT INTO ResHallX(ResHallID,RoomNum) VALUES(${x},${y})`;
+      const rows = await db.all(query);
+    }
+  }
+
+  console.log("poped");
 }
 
 async function getDBConnection() {

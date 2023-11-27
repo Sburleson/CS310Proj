@@ -52,6 +52,33 @@ function init(){
     .catch((error) => {
       console.error('Error fetching building data from the API:', error);
     });
+
+    // Queue things
+
+    //show div
+    let qdiv = document.getElementById("EnterQueue");
+    qdiv.classList.remove("hide");
+
+    // show position
+
+    let reg = new RegExp("\\b(Hackman|Quads)\\b");
+    let type = NULL;
+    if(reg.test(selectedBuilding)){
+      type = "ILUQ";
+    }
+    else{
+      type = "DormQ";
+    }
+
+    fetch(`Queues/${type}`)
+    .then(response =>{
+      console.log(response);
+      let num = response;
+      let target = document.querySelector("#EnterQueue p1")
+      target.innerHTML = response;
+    })
+
+
   });
 }
 
@@ -67,4 +94,15 @@ function populateDropdown(data) {
     dropdown.appendChild(option);
   }
 
+}
+
+async function EnterQueue(ResHallName,GID){
+  let reg = new RegExp("\\b(Hackman|Quads)\\b");
+  const query = NULL;
+    if(reg.test(ResHallName)){
+      query = `INSERT INTO ILUQ(GID,ResHall) VALUES(${GID},${ResHallName})`;
+    }
+    else{
+      query = `INSERT INTO DormsQ(GID,ResHall) VALUES(${GID},${ResHallName})`;
+    }
 }

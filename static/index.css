@@ -111,3 +111,13 @@ header, .navbar, #login {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
     transform: scale(1.05);
 }
+
+#queues{
+    width: 25%;
+    padding-left:15%;
+}
+
+nav.navbar{
+    display: flex;
+    justify-content: space-between;
+}
