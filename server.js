@@ -1,3 +1,4 @@
+const { group } = require('console');
 const express = require('express');
 const fs = require('fs'); // Require the 'fs' module to work with the file system
 const { get } = require('http');
@@ -73,11 +74,14 @@ async function validation(studentID, pwd) {
     }
 }
 app.post("/group", async function(req, res) {
-  const StudentIDs  = req.body.studentID;
+  const StudentIDs  = req.body.StudentIDs;
+  console.log(StudentIDs);
   try {
     await insertIntoGroups(StudentIDs);
-    res.status(200).json({ msg: "Data inserted successfully into groups table" });
+    res.status(200).json({ msg: "Data inserted successfully into groups table"});
     console.log("Data inserted into groups table");
+    
+    
   } catch (error) {
     console.error("Error in /group endpoint:", error); // Log the specific error
     res.status(500).json({ msg: "Internal server error in /group endpoint" });
@@ -88,10 +92,7 @@ app.post("/group", async function(req, res) {
 async function insertIntoGroups(StudentIDs) {
   const db = await getDBConnection();
   try {
-    // Insert into the groups table
-    const groupInsertQuery = "INSERT INTO groups (StudentIDs) VALUES (?)";
-    let result = await db.run(groupInsertQuery, [JSON.stringify(StudentIDs)]);
-    console.log(result);
+    
     // Fetch credits for the students
     const studentsCreditsQuery = `SELECT ID, Credits FROM Students WHERE ID IN (${StudentIDs.join(",")})`;
     const studentCredits = await db.all(studentsCreditsQuery);
@@ -103,11 +104,11 @@ async function insertIntoGroups(StudentIDs) {
     });
     const numberOfStudents = StudentIDs.length;
     const averageCredits = totalCredits / numberOfStudents;
-
-    // Insert into the queues2 table
-    const insertQueueQuery = "INSERT INTO Queues2 (GroupID, AverageCredits) VALUES (?, ?)";
-    await db.run(insertQueueQuery, [ID, averageCredits]);
-
+    // Insert into the groups table
+    const groupInsertQuery = "INSERT INTO groups (StudentIDs, AverageCredits) VALUES (?, ?)";
+    let result = await db.run(groupInsertQuery, [JSON.stringify(StudentIDs), averageCredits]);
+    console.log(result);
+    
     // Log for debugging
     console.log("Average credits for the group:", averageCredits);
   } catch (error) {
@@ -122,7 +123,7 @@ async function insertIntoGroups(StudentIDs) {
 app.get('/queue-order', async (req, res) => {
   try {
     const queueOrder = await getQueueOrderFromDatabase();
-    res.json(queueOrder);
+    res.status(200).json(queueOrder);
   } catch (error) {
     console.error("Error in /queue-order endpoint:", error);
     res.status(500).json({ error: 'Failed to retrieve queue order from the database' });
@@ -132,12 +133,13 @@ app.get('/queue-order', async (req, res) => {
 async function getQueueOrderFromDatabase() {
   const db = await getDBConnection();
   try {
-    const query = "SELECT GroupID FROM queues2 ORDER BY AverageCredits DESC";
+    const query = "SELECT ID FROM groups ORDER BY AverageCredits DESC";
     const queueData = await db.all(query);
 
     console.log("Queue Data:", queueData); // Log retrieved queue data
 
-    const queueOrder = queueData.map(item => item.GroupID);
+    const queueOrder = queueData.map(item => item.ID);
+    console.log(queueOrder);
     return queueOrder;
   } catch (error) {
     console.error(error);
@@ -147,10 +149,52 @@ async function getQueueOrderFromDatabase() {
   }
 }
 
+app.post("/checkRoomOccupancy", async (req, res) => {
+  const { housingID } = req.body;
+  try {
+      const db = await getDBConnection();
+      const query = `SELECT * FROM reshallx WHERE RoomID = ? AND occupiedBy IS NOT NULL`;
+      const result = await db.get(query, [housingID]);
+      await db.close();
 
+      if (result) {
+          res.json({ roomOccupied: true });
+          console.log("Room is occupied");
+      } else {
+          res.json({ roomOccupied: false });
+          console.log("Room is vacant");
+      }
+      
+  } catch (error) {
+      console.error("Error checking room occupancy:", error);
+      res.status(500).json({ error: 'Internal server error while checking room occupancy' });
+  }
+});
 
+app.post("/occupyRoom", async (req, res) => {
+  const { housingID, groupID } = req.body;
+  console.log("Housing ID = " + housingID + ", group ID is " + groupID);
+  try {
+      const db = await getDBConnection();
+      const checkOccupancyQuery = `SELECT * FROM reshallx WHERE RoomID = ? AND occupiedBy IS NOT NULL`;
+      const result = await db.get(checkOccupancyQuery, [housingID]);
 
+      if (!result) {
+          const updateQuery = `UPDATE reshallx SET occupiedBy = ? WHERE RoomID = ?`;
+          await db.run(updateQuery, [groupID, housingID]);
+          console.log("Group id is: " + groupID);
+          await db.close();
 
+          res.json({ success: true, message: `Room ${housingID} occupied by Group ${groupID}` });
+      } else {
+          await db.close();
+          res.status(400).json({ error: `Room ${housingID} is already occupied` });
+      }
+  } catch (error) {
+      console.error("Error occupying room:", error);
+      res.status(500).json({ error: 'Internal server error while occupying room' });
+  }
+});
 
 
 
@@ -164,3 +208,4 @@ async function getDBConnection() {
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
