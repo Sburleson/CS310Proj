@@ -68,9 +68,11 @@
                 // After saving, fetch and display the queue order
                 fetch(BASE_URL + "/queue-order")
                     .then(response => response.json())
-                    .then(queueOrder => {
+                    .then(data => {
+                        const queueLen = data["Length"];
+                        const queueOrder = data["Groups"];
                         console.log("Received queue order:", queueOrder);
-                        const YOUR_GROUP_ID = queueOrder.length;
+                        const YOUR_GROUP_ID = queueLen;
                         alert("Roommates have been saved successfully. Group id is: " + YOUR_GROUP_ID);
                         // Display the queue order in an HTML list
                         const firstTenEntries = queueOrder.slice(0, 10);

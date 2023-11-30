@@ -46,14 +46,6 @@ form {
     display: inline-block;
 }
 
-#login {
-    text-align: center;
-}
-
-.loggedin {
-    visibility: hidden;
-}
-
 main {
     background: linear-gradient(to bottom, white, #1266AC) !important;
     min-height: 100vh; /* Set minimum height to 100% of viewport height */
@@ -63,58 +55,6 @@ main > h2 {
     text-align: center;
     font-size: 36px; /* Increase the font size for consistency */
     padding: 15px;
-}
-
-#dropdown {
-    align-content: center;
-    text-align: center;
-}
-
-#surveyDropdown {
-    text-align: center;
-    max-width: 400px;
-    display: block;
-    margin: 0 auto;
-    border: 2px solid #1266AC;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-#roommates {
-    max-width: 400px;
-    margin: 20px auto;
-    padding: 20px;
-    border: 2px solid #1266AC;
-    border-radius: 8px;
-}
-
-.input-group {
-    margin-bottom: 15px;
-}
-
-.input-group-text {
-    border: 2px solid #1266AC;
-    background-color: #1266AC;
-    color: white;
-}
-
-.form-floating {
-    width: 100%;
-}
-  
-#saveButton {
-    display: block;
-    margin: 0 auto;
-    background-color: #dad9da;
-    border: 2px solid black;
-    color: black;
-    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
-}
-
-#saveButton:hover {
-    background-color: #1266AC;
-    border-color: #1266AC;
-    color: white;
 }
 
 .visible {
@@ -136,9 +76,35 @@ main > h2 {
 
 #checkQueue {
     display: block;
-    margin: 0 auto;
-    background-color: #dad9da;
-    border: 2px solid black;
-    color: black;
+    margin: 20px auto;
+    background-color: #1266AC;
+    border: 2px solid #1266AC;
+    color: #fff;
     transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    border-radius: 5px;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer; /* Change cursor on hover */
+}
+
+#checkQueue:hover {
+    background-color: #0a4f91; /* Darker color on hover */
+    border-color: #0a4f91;
+}
+
+#queueOrder {
+    border: 2px solid black;
+    max-width: 350px;
+    margin: auto;
+}
+
+#queueOrder > h3 {
+    text-align: center;
+}
+
+.container {
+    margin: auto;
+    /* border: 2px solid black; */
+    align-items: center;
+    text-align: center;
 }

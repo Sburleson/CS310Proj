@@ -122,8 +122,10 @@ async function insertIntoGroups(StudentIDs) {
 
 app.get('/queue-order', async (req, res) => {
   try {
-    const queueOrder = await getQueueOrderFromDatabase();
-    res.status(200).json(queueOrder);
+    const result = await getQueueOrderFromDatabase();
+    const queueOrder = result[0];
+    const queueLen = result[1];
+    res.status(200).json({"Length": queueLen, "Groups": queueOrder});
   } catch (error) {
     console.error("Error in /queue-order endpoint:", error);
     res.status(500).json({ error: 'Failed to retrieve queue order from the database' });
@@ -133,14 +135,18 @@ app.get('/queue-order', async (req, res) => {
 async function getQueueOrderFromDatabase() {
   const db = await getDBConnection();
   try {
-    const query = "SELECT ID FROM groups ORDER BY AverageCredits DESC";
-    const queueData = await db.all(query);
-
+    const groupsQuery = "SELECT ID FROM groups WHERE RoomID IS NULL ORDER BY AverageCredits DESC";
+    const queueData = await db.all(groupsQuery);
+    const queueLenQuery = "SELECT * FROM groups";
+    const result = await db.all(queueLenQuery);
+    const queueLen = result.length;
+    console.log("Queue Len = " + queueLen);
     console.log("Queue Data:", queueData); // Log retrieved queue data
 
     const queueOrder = queueData.map(item => item.ID);
     console.log(queueOrder);
-    return queueOrder;
+    return [queueOrder, queueLen];
+
   } catch (error) {
     console.error(error);
     throw new Error('Failed to retrieve queue order from the database');
@@ -182,6 +188,8 @@ app.post("/occupyRoom", async (req, res) => {
       if (!result) {
           const updateQuery = `UPDATE reshallx SET occupiedBy = ? WHERE RoomID = ?`;
           await db.run(updateQuery, [groupID, housingID]);
+          const updateGroupQuery = `UPDATE Groups Set RoomID = ? WHERE ID = ?`;
+          await db.run(updateGroupQuery, [housingID, groupID]);
           console.log("Group id is: " + groupID);
           await db.close();
 

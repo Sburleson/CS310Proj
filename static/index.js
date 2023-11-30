@@ -1,61 +1,68 @@
-  window.addEventListener('load', init);
-  console.log("1");
-    function init(){
-        console.log("init");
+let isLoggedIn = false;
 
-        let SidEle = document.getElementById('StudentID');
-        let pwdEle = document.getElementById('pwd');
-        let logBtn = document.getElementById('logbtn');
+window.addEventListener('load', init);
 
-        console.log(logBtn);
+function init() {
+    const loginForm = document.getElementById('loginForm');
+    loginForm.addEventListener('submit', checkCred);
+    toggleNavbarVisibility(); // Initially hide the navigation bar
+}
 
-        logBtn.addEventListener('click', checkCred);
-    }
+function checkCred(event) {
+    event.preventDefault(); // Prevent the form from submitting
+    const BASE_URL = "http://localhost:8080";
+    const studentID = document.getElementById('StudentID').value;
+    const password = document.getElementById('pwd').value;
 
-    function checkCred(event) {
-        event.preventDefault(); // Prevent the form from submitting
-        const BASE_URL = "http://localhost:8080";
-        let studentID = document.getElementById('StudentID').value;
-        let password = document.getElementById('pwd').value;
-        // Make a POST request to the server
-        //let data = {method: "POST",ID: studentID, pass: password};
-        //console.log(data);
-
-        data = {method: 'POST',
+    const data = {
+        method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ ID: studentID, pass: password })
-        }
+        body: JSON.stringify({ ID: studentID, pass: password }),
+    };
 
-        console.log(data);
+    const loginBtn = document.getElementById('logbtn');
+    loginBtn.disabled = true; // Disable the login button during processing
 
-        fetch(BASE_URL+'/login', data)
+    // Display loader while processing login
+    const loginMessages = document.getElementById('loginMessages');
+    loginMessages.innerHTML = '<div class="text-center">Logging in...</div>';
+
+    fetch(BASE_URL + '/login', data)
         .then(response => response.json())
         .then(data => {
             if (data.msg === 'success') {
-                console.log('Success');
+                isLoggedIn = true;
                 showSuccessMessage();
             } else {
-                console.log('Fail');
-                // Display an error message or handle the failure as needed
+                isLoggedIn = false;
+                showFailureMessage();
             }
         })
         .catch(error => {
             console.error('Error:', error);
-            // Handle the error as needed
+            showFailureMessage();
+        })
+        .finally(() => {
+            loginBtn.disabled = false; // Enable the login button
+            toggleNavbarVisibility(); // Show/hide navbar based on login status
         });
-    }
+}
 
-    function showSuccessMessage() {
-        // Hide login prompts and show success message
-        document.getElementById('login').style.display = 'none';
-        // Add a new element to display the success message
-        let successMessage = document.createElement('div');
-        successMessage.textContent = 'Logged in successfully!';
-        successMessage.style.color = '#28a745'; /* Bootstrap's success color */
-        successMessage.style.fontWeight = 'bold';
-        successMessage.style.marginTop = '20px'; /* Adjust based on your design */
-        document.body.appendChild(successMessage);
-    }
+function showSuccessMessage() {
+    const loginMessages = document.getElementById('loginMessages');
+    loginMessages.innerHTML = '<div class="text-success text-center">Logged in successfully!</div>';
 
+    // document.getElementById('login').style.display = 'none';
+}
+
+function showFailureMessage() {
+    const loginMessages = document.getElementById('loginMessages');
+    loginMessages.innerHTML = '<div class="text-danger text-center">Login failed. Please check your credentials.</div>';
+}
+
+function toggleNavbarVisibility() {
+    const navbar = document.querySelector('.navbar');
+    navbar.style.visibility = isLoggedIn ? 'visible' : 'hidden';
+}

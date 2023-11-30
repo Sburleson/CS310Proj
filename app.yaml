@@ -1,0 +1,11 @@
+runtime: nodejs18
+
+env_variables:
+  INSTANCE_UNIX_SOCKET: /cloudsql/webdevproj-400313:us-east1:housing
+  DB_USER: root
+  DB_PASS: housing
+  DB_NAME: housing
+
+handlers:
+  - url: /.*
+    static_dir: /static/.*

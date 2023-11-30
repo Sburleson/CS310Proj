@@ -14,68 +14,68 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `housing` DEFAULT CHARACTER SET utf8 ;
-USE `housing` ;
+CREATE SCHEMA IF NOT EXISTS `mydb` DEFAULT CHARACTER SET utf8 ;
+USE `mydb` ;
 
 CREATE TABLE IF NOT EXISTS `Res Halls` (
-  `ID` INTEGER NOT NULL,
-  `Name` TEXT NULL,
-  `Capacity` TEXT NULL,
+  `ID` INT NOT NULL,
+  `Name` VARCHAR(100) NULL,
+  `Capacity` VARCHAR(100) NULL,
   PRIMARY KEY (`ID`))
 
 drop table if exists `Groups`;
 CREATE TABLE IF NOT EXISTS `Groups` (
-  `ID` INTEGER PRIMARY KEY AUTOINCREMENT,
-  `AverageCredits` INTEGER NULL,
-  `StudentIDs` TEXT NULL,
-  `RoomID` TEXT NULL);
+  `ID` INT PRIMARY KEY AUTO_INCREMENT,
+  `AverageCredits` INT NULL,
+  `StudentIDs` VARCHAR(100) NULL,
+  `RoomID` VARCHAR(100) NULL);
   
 
 
 CREATE TABLE IF NOT EXISTS `Students` (
-  `ID` INTEGER NOT NULL,
-  `Name` TEXT NULL,
-  `Credits` TEXT NULL,
-  `GPA` TEXT NULL,
-  `RoomID` INTEGER NULL,
-  'Password' TEXT NOT NULL,
+  `ID` INT NOT NULL,
+  `Name` VARCHAR(100) NULL,
+  `Credits` VARCHAR(100) NULL,
+  `GPA` VARCHAR(100) NULL,
+  `RoomID` INT NULL,
+  'Password' VARCHAR(100) NOT NULL,
   PRIMARY KEY (`ID`));
 
 
 
 drop table if exists `ResHallX`;
 CREATE TABLE IF NOT EXISTS `ResHallX` (
-  `RoomID` TEXT NOT NULL,
-  `OccupiedBy` TEXT NULL,
+  `RoomID` VARCHAR(100) NOT NULL,
+  `OccupiedBy` VARCHAR(100) NULL,
   PRIMARY KEY (`RoomID`));
 
 
 
 CREATE TABLE IF NOT EXISTS `Queues2` (
-  `ID` INTEGER NOT NULL,
-  `ResHall` TEXT NULL,
-  `GroupID` TEXT NULL,
-  `AverageCredits` INTEGER NULL,
+  `ID` INT NOT NULL,
+  `ResHall` VARCHAR(100) NULL,
+  `GroupID` VARCHAR(100) NULL,
+  `AverageCredits` INT NULL,
   PRIMARY KEY (`ID`));
 
 -- new queue stuff
 CREATE TABLE IF NOT EXISTS `DormsQ`(
-`GroupID` INTEGER NOT NULL,
-`ResHall` TEXT NOT NULL,
-`QID` INTEGER NOT NULL,
+`GroupID` INT NOT NULL,
+`ResHall` VARCHAR(100) NOT NULL,
+`QID` INT NOT NULL,
 PRIMARY KEY (`QID`);
 )
 
 CREATE TABLE IF NOT EXISTS `ILUQ`(
-`GroupID` INTEGER NOT NULL,
-`ResHall` TEXT NOT NULL,
-`QID` INTEGER NOT NULL,
+`GroupID` INT NOT NULL,
+`ResHall` VARCHAR(100) NOT NULL,
+`QID` INT NOT NULL,
 PRIMARY KEY (`QID`);
 )
 
 CREATE TABLE IF NOT EXISTS `Off_CampusQ`(
-`GroupID` INTEGER NOT NULL,
-`QID` INTEGER NOT NULL,
+`GroupID` INT NOT NULL,
+`QID` INT NOT NULL,
 PRIMARY KEY (`QID`);
 )
 

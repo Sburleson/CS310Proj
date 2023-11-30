@@ -4,7 +4,7 @@
     const BASE_URL = "http://localhost:8080"; // Define BASE_URL outside the functions
 
     let queueOrder = []; // Define queueOrder outside the functions
-
+    var queueLen = 0;
     window.addEventListener('load', initialization);
 
     function initialization() {
@@ -38,12 +38,14 @@
                 // After saving, fetch and display the queue order
                 fetch(BASE_URL + "/queue-order")
                     .then(response => response.json())
-                    .then(queueOrder => {
+                    .then(data => {
+                        queueLen = data["Length"];
+                        queueOrder = data["Groups"];
                         console.log("Received queue order:", queueOrder);
-                        const YOUR_GROUP_ID = queueOrder.length;
+                        const YOUR_GROUP_ID = queueLen;
                         
                         alert("Roommates have been saved successfully. Group id is: " + YOUR_GROUP_ID);
-                        if (queueOrder.length > 0 && queueOrder[0] === YOUR_GROUP_ID) {
+                        if (queueLen > 0 && queueOrder[0] === YOUR_GROUP_ID) {
                             // If your group ID is first, show the form
                             housingForm.classList.remove("hidden");
                         }
@@ -73,7 +75,7 @@
     function submitFunction() {
         const housingIDInput = document.getElementById('housingID');
         const housingID = housingIDInput.value.trim(); // Get the entered housing ID
-        const YOUR_GROUP_ID = queueOrder.length; // Assign the group ID from the queueOrder
+        const YOUR_GROUP_ID = queueLen; // Assign the group ID from the queueOrder
 
         if (housingID !== "") {
             // Check room occupancy and attempt to occupy the room
@@ -100,7 +102,7 @@
                         if (occupyResult.success) {
                             alert(`Room ${housingID} occupied by Group ${YOUR_GROUP_ID}`);
 
-                            if (queueOrder.length > 0) {
+                            if (queueLen > 0) {
                                 queueOrder.shift(); // Remove the first element from the array
                                 console.log("Queue after removing first group:", queueOrder);
                             }
