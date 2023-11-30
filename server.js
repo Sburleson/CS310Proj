@@ -97,6 +97,23 @@ async function insertIntoGroups(StudentIDs) {
     const studentsCreditsQuery = `SELECT ID, Credits FROM Students WHERE ID IN (${StudentIDs.join(",")})`;
     const studentCredits = await db.all(studentsCreditsQuery);
 
+    // NEED TO CHECK IF STUDENT HAS BEEN IN OTHER GROUP
+    const DupeQuery = `Select StudentIDs from Groups`;
+    const AllIDs = await db.all(DupeQuery);
+
+    for(x in AllIDs){
+      let str = x.StudentIDs;
+      let array = JSON.parse(str);
+
+      const containsNumber = array.filter(item => StudentIDs.includes(item));
+    if (containsNumber) {
+      console.log('A student in the group is already in a group.');
+    } else {
+      console.log('There are no duplicate IDs.');
+    }
+    }
+
+
     // Calculate average credits
     let totalCredits = 0;
     studentCredits.forEach(student => {
