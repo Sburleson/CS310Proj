@@ -12,27 +12,12 @@ First, login to the website using correct credentials. In future use, these cred
 
 
 ### API Documentation:
-Queue-order: 
-  Type: GET
-  Parameters: req, res
-  Use: Develop a queue that can be displayed on the website
+Queue-order: Type: GET; Parameters: req, res; Use: Develop a queue that can be displayed on the website
 
-Check Room Occupancy:
-  Type: POST
-  Parameters: req, res
-  Use: Check if a requested room is already occupied
+Check Room Occupancy: Type: POST; Parameters: req, res; Use: Check if a requested room is already occupied
 
-Occupy Room:
-  Type: POST
-  Parameters: req, res
-  Use: Occupy a room at the request of a user
+Occupy Room: Type: POST; Parameters: req, res; Use: Occupy a room at the request of a user
 
-Login:
-  Type: POST
-  Parameters: req, res
-  Use: Check login credentials and sign a user in
+Login: Type: POST; Parameters: req, res; Use: Check login credentials and sign a user in
 
-Group:
-  Type: POST
-  Parameters: req, res
-  Use: Create groups when the survey is completed
+Group: Type: POST; Parameters: req, res; Use: Create groups when the survey is completed
