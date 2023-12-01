@@ -5,3 +5,7 @@ When a user first pulls up the page, they are greeted by the EZ Housing logo as 
 
 ### Design:
 The website consists of two main logos that feature the EZ Housing name. We have a bird logo that keeps a simple Etown theme, and we have a text logo that adds to the visual appeal of the website. We use the same color scheme as Elizabethtown College to keep the website consistent with the college. Bootstrap and FontAwesome has been implemented to give the page a more user-friendly feel. 
+
+
+### Use:
+First, login to the website using correct credentials. In future use, these credentials will be provided to the user from the college. Then, browse the possible housing options on the residence hall page to determine where you want to live. Next, click the survey button in the navigation bar. This takes you to the survey page where you can input your student ID as well as your roommates. Click the save button. The group will be created and you are prompted to click on the housing button. Your group ID will display on the screen and you can see your number in the queue. If you are first in the queue, you can select your housing by entering the RoomID for the place you want to live. If the room is vacant, then your selection is saved properly. Otherwise, a message will appear and you are told to select another room.
