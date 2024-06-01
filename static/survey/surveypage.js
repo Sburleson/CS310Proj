@@ -9,9 +9,13 @@
         let pwd = document.getElementById('pwd');
         let SubBtn = document.getElementById('logbtn');
         let save = document.getElementById('saveButton');
+        let housingButton = document.getElementById("housing-button");
         save.addEventListener('click', saveFunction);
         console.log(SubBtn);
-        //SubBtn.addEventListener('click', test);
+        housingButton.addEventListener('click', function() {
+            // Redirect to the housing.html page
+            window.location.href = 'housing.html';
+        });
     }
 
     function test(){
@@ -30,24 +34,6 @@
         }
     }
 
-    function displayQueueOrder() {
-        $.ajax({
-            type: 'GET',
-            url: 'http://localhost:8080/queue-order',
-            success: function(data) {
-                console.log("Received queue order:", data); // Log the received data
-                let orderHtml = '<h3>Order of Groups in Queue</h3><ol>';
-                data.forEach(function(groupID) {
-                    orderHtml += `<li>${groupID}</li>`;
-                });
-                orderHtml += '</ol>';
-                $('#queueOrder').html(orderHtml);
-            },
-            error: function(xhr, status, error) {
-                console.error(error);
-            }
-        });
-    }
     
 
     function saveFunction() {
@@ -57,6 +43,8 @@
         let roommate1 = document.getElementById("floatingInputGroup1").value;
         let roommate2 = document.getElementById("floatingInputGroup2").value;
         let roommate3 = document.getElementById("floatingInputGroup3").value;
+        let housing = document.getElementById("housing-button");
+        housing.classList.remove("hidden");
     
         let roommateArray = [yourself, roommate1, roommate2, roommate3];
         console.log(roommateArray);
@@ -74,17 +62,23 @@
             .then(response => response.json())
             .then(savedData => {
                 console.log("Data sent:", savedData);
-                alert("Roommates have been saved successfully");
+                // alert(`Roommates have been saved successfully.`);
+                
     
                 // After saving, fetch and display the queue order
                 fetch(BASE_URL + "/queue-order")
                     .then(response => response.json())
-                    .then(queueOrder => {
+                    .then(data => {
+                        const queueLen = data["Length"];
+                        const queueOrder = data["Groups"];
                         console.log("Received queue order:", queueOrder);
-    
+                        const YOUR_GROUP_ID = queueLen;
+                        alert("Roommates have been saved successfully. Group id is: " + YOUR_GROUP_ID);
                         // Display the queue order in an HTML list
+                        const firstTenEntries = queueOrder.slice(0, 10);
+
                         let orderHtml = '<h3>Order of Groups in Queue</h3><ol>';
-                        queueOrder.forEach(function(groupID) {
+                        firstTenEntries.forEach(function(groupID) {
                             orderHtml += `<li>${groupID}</li>`;
                         });
                         orderHtml += '</ol>';
@@ -99,6 +93,7 @@
                 console.error("Error:", error);
                 alert("Roommates have not been saved properly");
             });
+            
     }
     
 })();
